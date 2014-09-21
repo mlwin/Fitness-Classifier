@@ -88,7 +88,7 @@ testData  = read.csv(&quot;testData.csv&quot;,  na.strings = c('NA','#DIV/0!',''
 <div id="data-processing-and-feature-selection" class="section level2">
 <h2>Data Processing and Feature Selection</h2>
 <p>In order to reduce unnecessary complexity of the model, irrelevant or erroneous features are dropped from the data set.</p>
-<p>In the data set, select data items with the feature new_window == “no”, which indicates that it is a sensor reading and not statistical derivations of the reading.</p>
+<p>In the data set, only data items with the feature new_window == “no”, which indicates that it is a sensor reading and not statistical derivations of the reading, are selected as prediction features.</p>
 <pre class="r"><code>trainData = trainData[trainData$new_window == &quot;no&quot;, ]</code></pre>
 <p>Next, select features that have high variance in the data set. Using <code>nearZeroVar()</code> features with very low variance are identified and the corresponding columns are noted to ignore.</p>
 <pre class="r"><code>nZeroVar      = nearZeroVar(trainData, saveMetrics=TRUE)
@@ -104,7 +104,7 @@ trainData$classe &lt;-as.factor(trainData$classe)</code></pre>
 <h2>Data Slicing and Cross Validation</h2>
 <pre class="r"><code>dim(trainData)</code></pre>
 <pre><code>## [1] 19216    53</code></pre>
-<p>In order to cross validate, training data is sliced into two subsets: train subset and test subset. This is done to get an idea of what is the out of sample error in the model before the validation with final test data set. Since training data set can be qualify as a low to medium sized data set, using the rules of thumb for prediction study design as describe in the class lecture, 60% of training data is partition for training and 40% for the testing.</p>
+<p>In order to cross validate, training data is sliced into two subsets: train subset and test subset. This is done to get an idea of what is the out of sample error in the model before the validation with final test data set. Since training data set can be qualified as a low to medium sized data set, using the rules of thumb for prediction study design as describe in the class lecture, 60% of training data is partition for training and 40% for the testing.</p>
 <pre class="r"><code>set.seed(643216)
 inTrain &lt;- createDataPartition (y= trainData$classe, p=0.6, list = FALSE)
 trainData.training = trainData[inTrain,]
